@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="form-card">
+            <h2>Ingresá</h2>
+            
+            <!-- Alerta para mostrar error de credenciales -->
+            <div id="alerta-login" class="mensaje-alerta mensaje-error"></div>
+
+            <form onsubmit="procesarLogin(event)">
+                <div class="input-group">
+                    <label>NOMBRE O CORREO ELECTRÓNICO</label>
+                    <input type="text" id="login-user" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>CONTRASEÑA</label>
+                    <input type="password" id="login-pass" placeholder="******" required>
+                </div>
+
+                <button type="submit" class="btn-negro">Ingresar</button>
+            </form>
+
+            <div class="link-text">
+                <a href="recuperar.html">¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="link-text" style="margin-top: 8px;">
+                ¿No tienes cuenta? <a href="registro.html">Registrate aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar la base de datos simulada en localStorage si no existe
+        if (!localStorage.getItem('db_usuarios')) {
+            const usuarioBase = {
+                nombre: "Jimena Martínez",
+                email: "hola@sitioincreible.com.ar",
+                clave: "123456",
+                dni: "12345678",
+                curso: "1ro Ciclo Básico"
+            };
+            localStorage.setItem('db_usuarios', JSON.stringify([usuarioBase]));
+        }
+
+        function procesarLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('login-user').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+            const alerta = document.getElementById('alerta-login');
+
+            const lista = JSON.parse(localStorage.getItem('db_usuarios')) || [];
+            const encontrado = lista.find(u => (u.email === user || u.nombre.toLowerCase() === user.toLowerCase()) && u.clave === pass);
+
+            if (encontrado) {
+                localStorage.setItem('sesion_activa', JSON.stringify(encontrado));
+                window.location.href = 'dashboard.html';
+            } else {
+                alerta.innerHTML = `
+                    <strong>Usuario o contraseña incorrectos.</strong><br>
+                    ¿No recuerdas tus datos? <a href="recuperar.html" style="color: #9b1c1c; text-decoration: underline;">Recuperar clave</a><br>
+                    ¿Eres nuevo? <a href="registro.html" style="color: #9b1c1c; text-decoration: underline;">Registrate aquí</a>
+                `;
+                alerta.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

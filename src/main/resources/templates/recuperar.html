@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="form-card">
+            <h2>¿Olvidaste tu contraseña?</h2>
+            <p style="font-size: 0.85rem; color: #555; margin-bottom: 20px; text-align: center;">
+                Ingresa tu correo para recibir las instrucciones de recuperación.
+            </p>
+            
+            <div id="alerta-recuperar" class="mensaje-alerta mensaje-exito"></div>
+
+            <form onsubmit="procesarRecuperacion(event)">
+                <div class="input-group">
+                    <label>CORREO ELECTRÓNICO</label>
+                    <input type="email" id="rec-email" placeholder="correo@ejemplo.com.ar" required>
+                </div>
+
+                <button type="submit" class="btn-negro">Enviar</button>
+            </form>
+
+            <div class="link-text">
+                <a href="login.html">Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function procesarRecuperacion(event) {
+            event.preventDefault();
+            const correo = document.getElementById('rec-email').value.trim();
+            const alerta = document.getElementById('alerta-recuperar');
+
+            alerta.innerText = "Se han enviado las instrucciones de recuperación a " + correo;
+            alerta.style.display = 'block';
+
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

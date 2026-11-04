@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos de Cursos - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <!-- Cabecera institucional -->
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <!-- Menú de navegación punteado institucional -->
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div class="menu-punteado" style="max-width: 900px; padding: 12px 20px;">
+            <span><a href="dashboard.html" style="text-decoration: none; color: inherit;">INICIO</a></span>
+            <span><a href="datos-cursos.html" style="text-decoration: none; color: inherit; font-weight: bold;">DATOS DE CURSO</a></span>
+            <span>HORARIO</span>
+            <span>ASISTENCIA</span>
+            <span>BASE DE DATOS</span>
+        </div>
+    </div>
+
+    <!-- Contenido Principal en Dos Columnas -->
+    <div class="contenido-pagina">
+        
+        <!-- Columna Izquierda: Dos botones de acción separados -->
+        <ul class="acciones-lista">
+            <li>
+                <button class="btn-accion-menu" onclick="abrirModalAlta()">+ AGREGAR ALUMNO</button>
+            </li>
+            <li>
+                <button class="btn-accion-menu" onclick="activarModoBaja()">🗑️ DAR DE BAJA ALUMNO</button>
+            </li>
+        </ul>
+
+        <!-- Columna Derecha: Buscador con lupa y Tabla Dinámica -->
+        <div class="tabla-contenedor">
+            
+            <!-- Barra de Búsqueda con Lupa (Solo aparece o se usa en baja/búsqueda) -->
+            <div class="buscador-container" id="buscador-container">
+                <span class="icono-lupa">🔍</span>
+                <input type="text" id="input-buscar" placeholder="Buscar alumno por Nombre, Apellido o DNI..." onkeyup="buscarAlumno()">
+            </div>
+
+            <!-- Tabla Dinámica -->
+            <table id="tabla-cursos">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>D. N. I.</th>
+                        <th id="columna-accion" class="oculto">Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-alumnos-body">
+                    <!-- Los alumnos registrados aparecerán aquí dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- RECUADRITO EMERGENTE (MODAL) PARA REGISTRAR ALUMNO -->
+    <div id="modal-alta" class="modal-fondo oculto">
+        <div class="modal-card">
+            <h3>Registrar Nuevo Alumno</h3>
+            <form id="form-alumno" onsubmit="guardarNuevoAlumno(event)">
+                <div class="input-group">
+                    <label for="modal-nombre">NOMBRE:</label>
+                    <input type="text" id="modal-nombre" required placeholder="Ingrese nombre">
+                </div>
+                <div class="input-group">
+                    <label for="modal-apellido">APELLIDO:</label>
+                    <input type="text" id="modal-apellido" required placeholder="Ingrese apellido">
+                </div>
+                <div class="input-group">
+                    <label for="modal-dni">D. N. I.:</label>
+                    <input type="text" id="modal-dni" required placeholder="Ingrese DNI">
+                </div>
+                <div class="modal-botones">
+                    <button type="submit" class="btn-negro">Guardar</button>
+                    <button type="button" class="btn-negro btn-cancelar" onclick="cerrarModalAlta()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/alumnos.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="form-card">
+            <h2>Registrate</h2>
+            
+            <form onsubmit="procesarRegistro(event)">
+                <div class="input-group">
+                    <label>NOMBRE Y APELLIDO</label>
+                    <input type="text" id="reg-nombre" placeholder="Ingrese su nombre y apellido" required>
+                </div>
+
+                <div class="input-group">
+                    <label>D. N. I.</label>
+                    <input type="text" id="reg-dni" placeholder="Ingrese su DNI" required>
+                </div>
+
+                <div class="input-group">
+                    <label>CORREO ELECTRÓNICO</label>
+                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com.ar" required>
+                </div>
+
+                <div class="input-group">
+                    <label>CLAVE</label>
+                    <input type="password" id="reg-clave" placeholder="******" required>
+                </div>
+
+                <div class="input-group">
+                    <label>CURSO A CARGO</label>
+                    <select id="reg-curso" required>
+                        <option value="">Seleccionar</option>
+                        <option value="1ro Ciclo Básico">1ro Ciclo Básico</option>
+                        <option value="2do Ciclo Básico">2do Ciclo Básico</option>
+                        <option value="3ro Ciclo Básico">3ro Ciclo Básico</option>
+                        <option value="1ro Ciclo Superior">1ro Ciclo Superior</option>
+                        <option value="2do Ciclo Superior">2do Ciclo Superior</option>
+                        <option value="3ro Ciclo Superior">3ro Ciclo Superior</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-negro">Registrar</button>
+            </form>
+
+            <div class="link-text">
+                ¿Ya tienes una cuenta? <a href="login.html">Iniciá sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function procesarRegistro(event) {
+            event.preventDefault();
+            const nuevo = {
+                nombre: document.getElementById('reg-nombre').value,
+                dni: document.getElementById('reg-dni').value,
+                email: document.getElementById('reg-email').value,
+                clave: document.getElementById('reg-clave').value,
+                curso: document.getElementById('reg-curso').value
+            };
+
+            let lista = JSON.parse(localStorage.getItem('db_usuarios')) || [];
+            lista.push(nuevo);
+            localStorage.setItem('db_usuarios', JSON.stringify(lista));
+
+            alert("¡Registro guardado con éxito! Ya puedes iniciar sesión.");
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

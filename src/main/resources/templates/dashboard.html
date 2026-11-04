@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="dashboard-container">
+            <div style="width: 100%; display: flex; justify-content: center;">
+        <div class="menu-punteado" style="max-width: 900px; padding: 12px 20px;">
+            <span><a href="dashboard.html" style="text-decoration: none; color: inherit;">INICIO</a></span>
+            <span><a href="datos-cursos.html" style="text-decoration: none; color: inherit; font-weight: bold;">DATOS DE CURSO</a></span>
+            <span>HORARIO</span>
+            <span>ASISTENCIA</span>
+            <span>BASE DE DATOS</span>
+        </div>
+    </div>
+
+            <h3 id="bienvenida-usuario" style="margin-bottom: 15px; color: #333;"></h3>
+
+            <div class="foto-fachada-container">
+                <img src="img/escuelaedm.png" alt="Escuela de Minas Sede La Quiaca">
+            </div>
+
+            <button onclick="cerrarSesion()" class="btn-negro" style="max-width: 180px; margin-top: 30px;">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <script>
+        // Verificar sesión activa
+        const sesion = localStorage.getItem('sesion_activa');
+        if (!sesion) {
+            window.location.href = 'login.html';
+        } else {
+            const usuario = JSON.parse(sesion);
+            document.getElementById('bienvenida-usuario').innerText = `Bienvenido/a, ${usuario.nombre} (${usuario.curso})`;
+        }
+
+        function cerrarSesion() {
+            localStorage.removeItem('sesion_activa');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
