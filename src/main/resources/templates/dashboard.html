@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Principal - Asistenciero Virtual</title>
+    <title>Inicio - Asistenciero Virtual</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-
     <header>
         <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
         <div class="escudo">
@@ -15,36 +14,49 @@
         </div>
     </header>
 
-    <div class="main-container">
-        <div class="dashboard-container">
-            <div style="width: 100%; display: flex; justify-content: center;">
-        <div class="menu-punteado" style="max-width: 900px; padding: 12px 20px;">
-            <span><a href="dashboard.html" style="text-decoration: none; color: inherit;">INICIO</a></span>
-            <span><a href="datos-cursos.html" style="text-decoration: none; color: inherit; font-weight: bold;">DATOS DE CURSO</a></span>
-            <span>HORARIO</span>
-            <span>ASISTENCIA</span>
-            <span>BASE DE DATOS</span>
+    <nav class="menu-punteado">
+        <a href="dashboard.html" class="activo">INICIO</a>
+        <a href="perfil.html">MI PERFIL</a>
+        <a href="datos-cursos.html">DATOS DE CURSO</a>
+    </nav>
+
+    <div class="inicio-wrapper">
+        <div class="titulo-bienvenida" id="titulo-usuario-cargo">
+            NOMBRE USUARIO ESTÁ A CARGO DEL CICLO A CARGO
         </div>
-    </div>
 
-            <h3 id="bienvenida-usuario" style="margin-bottom: 15px; color: #333;"></h3>
-
-            <div class="foto-fachada-container">
+        <div class="inicio-contenido">
+            <div class="inicio-foto">
                 <img src="img/escuelaedm.png" alt="Escuela de Minas Sede La Quiaca">
             </div>
 
-            <button onclick="cerrarSesion()" class="btn-negro" style="max-width: 180px; margin-top: 30px;">Cerrar Sesión</button>
+            <div class="inicio-contadores">
+                <div class="contador-fila">
+                    <label>cantidad de presentes:</label>
+                </div>
+
+                <div class="contador-fila">
+                    <label>cantidad de ausentes:</label>
+                </div>
+
+                <div class="contador-fila">
+                    <label>cantidad de tardanzas:</label>
+                </div>
+            </div>
         </div>
+
+        <button type="button" onclick="cerrarSesion()" class="btn-negro" style="max-width: 180px; margin: 40px auto 0 auto; display: block;">Cerrar Sesión</button>
     </div>
 
     <script>
-        // Verificar sesión activa
-        const sesion = localStorage.getItem('sesion_activa');
+        const sesion = JSON.parse(localStorage.getItem('sesion_activa'));
         if (!sesion) {
             window.location.href = 'login.html';
         } else {
-            const usuario = JSON.parse(sesion);
-            document.getElementById('bienvenida-usuario').innerText = `Bienvenido/a, ${usuario.nombre} (${usuario.curso})`;
+            const nombre = sesion.nombre ? sesion.nombre.toUpperCase() : "USUARIO";
+            const curso = sesion.curso ? sesion.curso.toUpperCase() : "CURSO ASIGNADO";
+            const ciclo = sesion.ciclo ? ` (${sesion.ciclo.toUpperCase()})` : "";
+            document.getElementById('titulo-usuario-cargo').innerText = `${nombre} ESTÁ A CARGO DE ${curso}${ciclo}`;
         }
 
         function cerrarSesion() {

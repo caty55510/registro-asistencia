@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Asistenciero Virtual</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <header>
+        <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
+        <div class="escudo">
+            <img src="img/escudoedm.png" alt="Escudo EDM" width="100">
+        </div>
+    </header>
+
+    <nav class="menu-punteado">
+        <a href="dashboard.html">INICIO</a>
+        <a href="perfil.html" class="activo">MI PERFIL</a>
+        <a href="datos-cursos.html">DATOS DE CURSO</a>
+    </nav>
+
+    <div class="perfil-wrapper">
+        <div class="perfil-contenido">
+            <div class="perfil-foto">
+                <img src="img/avatar-casco.png" alt="Avatar Institucional" onerror="this.src='img/perfil.jpg'">
+            </div>
+
+            <div class="perfil-datos">
+                <h2>DATOS PERSONALES</h2>
+
+                <div class="perfil-campo">
+                    <label>NOMBRE:</label>
+                    <span id="perfil-nombre">-</span>
+                </div>
+
+                <div class="perfil-campo">
+                    <label>D. N. I.:</label>
+                    <span id="perfil-dni">-</span>
+                </div>
+
+                <div class="perfil-campo">
+                    <label>CURSO A CARGO:</label>
+                    <span id="perfil-curso">-</span>
+                </div>
+
+                <div class="perfil-campo">
+                    <label>CORREO ELECTRÓNICO:</label>
+                    <span id="perfil-email">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sesion = JSON.parse(localStorage.getItem('sesion_activa'));
+        if (!sesion) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('perfil-nombre').innerText = sesion.nombre || 'No especificado';
+            document.getElementById('perfil-dni').innerText = sesion.dni || 'No especificado';
+            const cursoTexto = sesion.ciclo ? `${sesion.curso} - ${sesion.ciclo}` : (sesion.curso || 'No especificado');
+            document.getElementById('perfil-curso').innerText = cursoTexto;
+            document.getElementById('perfil-email').innerText = sesion.email || 'No especificado';
+        }
+    </script>
+</body>
+</html>

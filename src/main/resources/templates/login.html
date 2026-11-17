@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-
     <header>
         <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
         <div class="escudo">
@@ -18,42 +17,37 @@
     <div class="main-container">
         <div class="form-card">
             <h2>Ingresá</h2>
+            <p class="subtitulo-form">Iniciá sesión para continuar</p>
             
-            <!-- Alerta para mostrar error de credenciales -->
-            <div id="alerta-login" class="mensaje-alerta mensaje-error"></div>
+            <div id="alerta-login" class="mensaje-alerta"></div>
 
             <form onsubmit="procesarLogin(event)">
                 <div class="input-group">
-                    <label>NOMBRE O CORREO ELECTRÓNICO</label>
-                    <input type="text" id="login-user" placeholder="ejemplo@correo.com" required>
+                    <label for="login-user">NOMBRE O CORREO</label>
+                    <input type="text" id="login-user" placeholder="hola@sitioincreible.com.ar" required>
                 </div>
-
                 <div class="input-group">
-                    <label>CONTRASEÑA</label>
+                    <label for="login-pass">CONTRASEÑA</label>
                     <input type="password" id="login-pass" placeholder="******" required>
                 </div>
-
-                <button type="submit" class="btn-negro">Ingresar</button>
+                <button type="submit" class="btn-negro">Ingresá</button>
             </form>
 
-            <div class="link-text">
-                <a href="recuperar.html">¿Olvidaste tu contraseña?</a>
-            </div>
-            <div class="link-text" style="margin-top: 8px;">
+            <div class="link-text" style="margin-top: 15px;">
                 ¿No tienes cuenta? <a href="registro.html">Registrate aquí</a>
             </div>
         </div>
     </div>
 
     <script>
-        // Inicializar la base de datos simulada en localStorage si no existe
         if (!localStorage.getItem('db_usuarios')) {
             const usuarioBase = {
                 nombre: "Jimena Martínez",
                 email: "hola@sitioincreible.com.ar",
                 clave: "123456",
                 dni: "12345678",
-                curso: "1ro Ciclo Básico"
+                ciclo: "Ciclo Básico",
+                curso: "1RO superior o basico"
             };
             localStorage.setItem('db_usuarios', JSON.stringify([usuarioBase]));
         }
@@ -63,9 +57,12 @@
             const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
             const alerta = document.getElementById('alerta-login');
-
             const lista = JSON.parse(localStorage.getItem('db_usuarios')) || [];
-            const encontrado = lista.find(u => (u.email === user || u.nombre.toLowerCase() === user.toLowerCase()) && u.clave === pass);
+
+            const encontrado = lista.find(u => 
+                (u.email.toLowerCase() === user.toLowerCase() || u.nombre.toLowerCase() === user.toLowerCase()) && 
+                u.clave === pass
+            );
 
             if (encontrado) {
                 localStorage.setItem('sesion_activa', JSON.stringify(encontrado));
@@ -73,8 +70,7 @@
             } else {
                 alerta.innerHTML = `
                     <strong>Usuario o contraseña incorrectos.</strong><br>
-                    ¿No recuerdas tus datos? <a href="recuperar.html" style="color: #9b1c1c; text-decoration: underline;">Recuperar clave</a><br>
-                    ¿Eres nuevo? <a href="registro.html" style="color: #9b1c1c; text-decoration: underline;">Registrate aquí</a>
+                    ¿Eres nuevo? <a href="registro.html" style="color: #9b1c1c;">Registrate aquí</a>
                 `;
                 alerta.style.display = 'block';
             }

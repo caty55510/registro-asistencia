@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-
     <header>
         <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
         <div class="escudo">
@@ -16,17 +15,20 @@
     </header>
 
     <div class="main-container">
-        <div class="form-card" style="text-align: center;">
+        <div class="form-card">
             <h2>Asistenciero Virtual</h2>
-            <p style="margin-bottom: 25px; color: #555;">Bienvenido/a al sistema de gestión académica y control de asistencia.</p>
+            <p class="subtitulo-form">Bienvenido/a al sistema de gestión académica y control de asistencia.</p>
             
-            <a href="login.html"><button class="btn-negro" style="margin-bottom: 12px;">Iniciar Sesión</button></a>
-            <a href="registro.html"><button class="btn-negro" style="background-color: #444;">Registrarse</button></a>
+            <a href="login.html" style="text-decoration: none;">
+                <button type="button" class="btn-negro">Iniciar Sesión</button>
+            </a>
+            <a href="registro.html" style="text-decoration: none;">
+                <button type="button" class="btn-negro" style="background-color: #444;">Registrarse</button>
+            </a>
         </div>
     </div>
 
     <script>
-        // Si ya hay una sesión activa, redirige automáticamente al Dashboard
         if (localStorage.getItem('sesion_activa')) {
             window.location.href = 'dashboard.html';
         }

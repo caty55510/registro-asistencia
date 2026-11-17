@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-
-    <!-- Cabecera institucional -->
     <header>
         <h1>Escuela de Minas "Dr. Horacio Carrillo"</h1>
         <div class="escudo">
@@ -16,40 +14,40 @@
         </div>
     </header>
 
-    <!-- Menú de navegación punteado institucional -->
-    <div style="width: 100%; display: flex; justify-content: center;">
-        <div class="menu-punteado" style="max-width: 900px; padding: 12px 20px;">
-            <span><a href="dashboard.html" style="text-decoration: none; color: inherit;">INICIO</a></span>
-            <span><a href="datos-cursos.html" style="text-decoration: none; color: inherit; font-weight: bold;">DATOS DE CURSO</a></span>
-            <span>HORARIO</span>
-            <span>ASISTENCIA</span>
-            <span>BASE DE DATOS</span>
-        </div>
-    </div>
+    <nav class="menu-punteado">
+        <a href="dashboard.html">INICIO</a>
+        <a href="perfil.html">MI PERFIL</a>
+        <a href="datos-cursos.html" class="activo">DATOS DE CURSO</a>
+    </nav>
 
-    <!-- Contenido Principal en Dos Columnas -->
     <div class="contenido-pagina">
-        
-        <!-- Columna Izquierda: Dos botones de acción separados -->
-        <ul class="acciones-lista">
-            <li>
-                <button class="btn-accion-menu" onclick="abrirModalAlta()">+ AGREGAR ALUMNO</button>
-            </li>
-            <li>
-                <button class="btn-accion-menu" onclick="activarModoBaja()">🗑️ DAR DE BAJA ALUMNO</button>
-            </li>
-        </ul>
+        <div class="panel-lateral-cursos">
+            <ul class="acciones-lista">
+                <li>
+                    <button type="button" class="btn-accion-menu" onclick="abrirModalAlta()">AGREGAR ALUMNO</button>
+                </li>
+                <li>
+                    <button type="button" class="btn-accion-menu" onclick="activarModoBaja()">DAR DE BAJA ALUMNO</button>
+                </li>
+            </ul>
 
-        <!-- Columna Derecha: Buscador con lupa y Tabla Dinámica -->
+            <div class="filtro-curso-box">
+                <label for="filtro-curso">SELECCIONAR CURSO</label>
+                <select id="filtro-curso" onchange="renderizarTabla()">
+                    <option value="">Marcar (Todos)</option>
+                    <option value="1RO superior o basico">1RO superior o basico</option>
+                    <option value="2DO superior o basico">2DO superior o basico</option>
+                    <option value="3RO superior o basico">3RO superior o basico</option>
+                </select>
+            </div>
+        </div>
+
         <div class="tabla-contenedor">
-            
-            <!-- Barra de Búsqueda con Lupa (Solo aparece o se usa en baja/búsqueda) -->
             <div class="buscador-container" id="buscador-container">
                 <span class="icono-lupa">🔍</span>
-                <input type="text" id="input-buscar" placeholder="Buscar alumno por Nombre, Apellido o DNI..." onkeyup="buscarAlumno()">
+                <input type="text" id="input-buscar" placeholder="Buscar alumno por Nombre, Apellido o DNI..." onkeyup="renderizarTabla()">
             </div>
 
-            <!-- Tabla Dinámica -->
             <table id="tabla-cursos">
                 <thead>
                     <tr>
@@ -57,17 +55,19 @@
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>D. N. I.</th>
+                        <th>Inasistencias totales</th>
+                        <th>Tardanzas</th>
                         <th id="columna-accion" class="oculto">Acción</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-alumnos-body">
-                    <!-- Los alumnos registrados aparecerán aquí dinámicamente -->
+                    <!-- Dinámico -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- RECUADRITO EMERGENTE (MODAL) PARA REGISTRAR ALUMNO -->
+    <!-- Modal para Agregar Alumno -->
     <div id="modal-alta" class="modal-fondo oculto">
         <div class="modal-card">
             <h3>Registrar Nuevo Alumno</h3>
@@ -84,6 +84,15 @@
                     <label for="modal-dni">D. N. I.:</label>
                     <input type="text" id="modal-dni" required placeholder="Ingrese DNI">
                 </div>
+                <div class="input-group">
+                    <label for="modal-curso">CURSO:</label>
+                    <select id="modal-curso" required>
+                        <option value="">Seleccionar curso</option>
+                        <option value="1RO superior o basico">1RO superior o basico</option>
+                        <option value="2DO superior o basico">2DO superior o basico</option>
+                        <option value="3RO superior o basico">3RO superior o basico</option>
+                    </select>
+                </div>
                 <div class="modal-botones">
                     <button type="submit" class="btn-negro">Guardar</button>
                     <button type="button" class="btn-negro btn-cancelar" onclick="cerrarModalAlta()">Cancelar</button>
@@ -91,7 +100,7 @@
             </form>
         </div>
     </div>
-
+    <script src="js/cursos.js"></script>
     <script src="js/alumnos.js"></script>
 </body>
 </html>
